@@ -3,32 +3,19 @@
 
 #include "MetroCharacter.h"
 
-// Sets default values
 AMetroCharacter::AMetroCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	mRiffleGuns.Reserve(3);
+	for(int i =0;i<3;i++)
+	{
+		TObjectPtr<UStaticMeshComponent> riffle= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun %d "),i) );
+		riffle->SetupAttachment(GetMesh(),FName("GunHold"));
+		mRiffleGuns.Add(riffle);
+	}
 
 }
 
-// Called when the game starts or when spawned
 void AMetroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
-
-// Called every frame
-void AMetroCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

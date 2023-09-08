@@ -3,27 +3,26 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "Metroid_MiniGame/Metroid_MiniGameCharacter.h"
 #include "MetroCharacter.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class METROID_MINIGAME_API AMetroCharacter : public ACharacter
+class METROID_MINIGAME_API AMetroCharacter : public AMetroid_MiniGameCharacter
 {
 	GENERATED_BODY()
-
 public:
-	// Sets default values for this character's properties
 	AMetroCharacter();
-
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Instanced,Category="Components",meta = (AllowPrivateAccess = true))
+	TArray<TObjectPtr<UStaticMeshComponent>> mRiffleGuns;
 
 };
