@@ -34,7 +34,7 @@ void ARiffle::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherA
 	{
 		Player->SetRiffle(true);
 		Player->SetEquip(true);
-		Player->GetRifleGuns()[0]->SetHiddenInGame(false);
+		Player->GetRifleGuns()->SetHiddenInGame(false);
 		UGameplayStatics::PlaySound2D(this,ShotSound);
 		Destroy();
 	}

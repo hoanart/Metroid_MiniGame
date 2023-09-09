@@ -33,7 +33,7 @@ public:
 	UFUNCTION(BlueprintSetter)
 	void SetEquip(const bool& bEquip);
 	
-	const TArray<TObjectPtr<UStaticMeshComponent>>& GetRifleGuns() const;
+	const TObjectPtr<UStaticMeshComponent>& GetRifleGuns() const;
 	
 private:
 	UFUNCTION()
@@ -52,6 +52,10 @@ private:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> EquipAction;
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Instanced,Category="Components",meta = (AllowPrivateAccess = true))
-	TArray<TObjectPtr<UStaticMeshComponent>> mRifleGuns;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
+	TObjectPtr<UStaticMeshComponent> mRifleGunHold;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
+	TObjectPtr<UStaticMeshComponent> mRifleGunStore;
+
 };

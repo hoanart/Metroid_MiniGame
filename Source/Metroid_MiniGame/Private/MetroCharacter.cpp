@@ -7,13 +7,12 @@
 
 AMetroCharacter::AMetroCharacter()
 {
-	mRifleGuns.Reserve(2);
-	for(int i =0;i<2;i++)
-	{
-		TObjectPtr<UStaticMeshComponent> riffle= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun %d "),i) );
-		riffle->SetupAttachment(GetMesh(),FName("GunHold"));
-		mRifleGuns.Add(riffle);
-	}
+	
+	mRifleGunHold= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun1")) );
+	mRifleGunHold->SetupAttachment(GetMesh(),FName("GunHold"));
+
+	mRifleGunStore= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun2")) );
+	mRifleGunStore->SetupAttachment(GetMesh(),FName("GunStore"));
 
 }
 
@@ -51,9 +50,9 @@ void AMetroCharacter::SetEquip(const bool& bEquip)
 	mbEquip = bEquip;
 }
 
-const TArray<TObjectPtr<UStaticMeshComponent>>& AMetroCharacter::GetRifleGuns() const
+const TObjectPtr<UStaticMeshComponent>& AMetroCharacter::GetRifleGuns() const
 {
-	return mRifleGuns;
+	return mRifleGunHold;
 }
 
 
@@ -61,15 +60,18 @@ void AMetroCharacter::Equip()
 {
 	if(mbEquip)
 	{
+		mbRiffle = !mbRiffle;
 		if(mbRiffle)
 		{
-			mRifleGuns[0]->SetHiddenInGame(true);
-			mRifleGuns[1]->SetHiddenInGame(false);
+			UE_LOG(LogTemp,Warning,TEXT("setRiffle"));
+			mRifleGunHold->SetHiddenInGame(false);
+			mRifleGunStore->SetHiddenInGame(true);
 		}
 		else
 		{
-			mRifleGuns[0]->SetHiddenInGame(false);
-			mRifleGuns[1]->SetHiddenInGame(true);
+			UE_LOG(LogTemp,Warning,TEXT("UnsetRiffle"));
+			mRifleGunHold->SetHiddenInGame(true);
+			mRifleGunStore->SetHiddenInGame(false);
 		}
 	}
 }
