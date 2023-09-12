@@ -4,9 +4,19 @@
 #include "MetroCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "RifleProjectile.h"
+#include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AMetroCharacter::AMetroCharacter()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	
+	mSphereComp = CreateDefaultSubobject<USphereComponent>("SphereComponent");
+	mSphereComp->SetupAttachment(RootComponent);
+	
+	mProjectilePosition = CreateDefaultSubobject<USceneComponent>("ProjectilePosition");
+	mProjectilePosition->SetupAttachment(RootComponent);
 	
 	mRifleGunHold= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun1")) );
 	mRifleGunHold->SetupAttachment(GetMesh(),FName("GunHold"));
@@ -27,6 +37,7 @@ void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	if(TObjectPtr<UEnhancedInputComponent> EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(EquipAction,ETriggerEvent::Triggered ,this,&AMetroCharacter::Equip);
+		EnhancedInputComponent->BindAction(FireAction,ETriggerEvent::Triggered,this,&AMetroCharacter::Fire);
 	}
 }
 
@@ -49,6 +60,22 @@ void AMetroCharacter::SetEquip(const bool& bEquip)
 {
 	mbEquip = bEquip;
 }
+
+const bool& AMetroCharacter::IsInAir() const
+{
+	return mbInAir;
+}
+
+void AMetroCharacter::SetInAir(const bool& bInAir)
+{
+	mbInAir = bInAir;
+}
+
+const FVector& AMetroCharacter::GetGunOffset() const
+{
+	return mGunOffset;
+}
+
 
 const TObjectPtr<UStaticMeshComponent>& AMetroCharacter::GetRifleGuns() const
 {
@@ -73,6 +100,26 @@ void AMetroCharacter::Equip()
 			mRifleGunHold->SetHiddenInGame(true);
 			mRifleGunStore->SetHiddenInGame(false);
 		}
+	}
+}
+
+void AMetroCharacter::Fire()
+{
+	if(mbRiffle&&!mbInAir)
+	{
+		UGameplayStatics::PlaySound2D(this,ShotSound);
+
+		FActorSpawnParameters Params;
+		Params.Owner = this;
+		Params.Instigator = GetInstigator();
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::Undefined;
+
+		FVector Loc = mSphereComp->GetComponentLocation();
+		FRotator Rot = mProjectilePosition->GetComponentRotation();
+		 Loc += Rot.RotateVector(GetGunOffset());
+		FTransform Trans = FTransform(Rot,Loc,FVector(1.0f,1.0f,1.0f));
+		TObjectPtr<ARifleProjectile> BulletSpawned = GetWorld()->SpawnActor<ARifleProjectile>(mRifleProjectileClass,Trans,Params);
+		
 	}
 }
 
