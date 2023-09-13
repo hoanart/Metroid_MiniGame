@@ -43,11 +43,8 @@ void ARifleProjectile::OnHit(UPrimitiveComponent* HitComponent,
 	{
 		
 		mExplosionParticle->Activate(true);
-		UE_LOG(LogTemp,Warning,TEXT("%d"),mExplosionParticle->IsActive());
 		mExplosionCue->Activate(true);
-		GetWorldTimerManager().SetTimer(delayTimer,0.05f,false);
-		//Destroy();
-		GetWorldTimerManager().ClearTimer(delayTimer);	
+		SetLifeSpan(0.06f);
 	}
 
 }
