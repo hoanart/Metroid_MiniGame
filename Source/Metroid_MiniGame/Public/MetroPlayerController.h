@@ -23,6 +23,10 @@ private:
 
 public:
 	bool GetAimLoc(const class AMetroCharacter* Player,const class UCameraComponent* Cam, const FVector& WorldDir, const float& YLoc, FVector& AimLoc);
+
+public:
+	UFUNCTION(BlueprintPure)
+	const float GetAimPitch() ; 
 private:
 	UPROPERTY(VisibleAnywhere,Category="Mouse")
 	float mMouseX;

@@ -4,6 +4,7 @@
 #include "MetroCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "MetroPlayerController.h"
 #include "RifleProjectile.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -12,18 +13,19 @@ AMetroCharacter::AMetroCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-	mSphereComp = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-	mSphereComp->SetupAttachment(RootComponent);
+	
 	
 	mProjectilePosition = CreateDefaultSubobject<USceneComponent>("ProjectilePosition");
 	mProjectilePosition->SetupAttachment(RootComponent);
 	
 	mRifleGunHold= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun1")) );
 	mRifleGunHold->SetupAttachment(GetMesh(),FName("GunHold"));
-
+	mSphereComp = CreateDefaultSubobject<USphereComponent>("SphereComponent");
+	mSphereComp->SetupAttachment(mRifleGunHold);
+	
 	mRifleGunStore= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun2")) );
 	mRifleGunStore->SetupAttachment(GetMesh(),FName("GunStore"));
-
+	
 }
 
 void AMetroCharacter::BeginPlay()
@@ -116,8 +118,12 @@ void AMetroCharacter::Fire()
 
 		FVector Loc = mSphereComp->GetComponentLocation();
 		FRotator Rot = mProjectilePosition->GetComponentRotation();
+		Rot.Pitch+= mRifleGunHold->GetComponentRotation().Pitch;
+			//Cast<AMetroPlayerController> (UGameplayStatics::GetPlayerController(this,0))->GetAimPitch()
 		 Loc += Rot.RotateVector(GetGunOffset());
 		FTransform Trans = FTransform(Rot,Loc,FVector(1.0f,1.0f,1.0f));
+		GEngine->AddOnScreenDebugMessage(-1,0.1f,FColor::Yellow,FString::Printf(TEXT("Rot : %s"),*Rot.ToString()));
+		//UE_LOG(LogTemp,Display,TEXT("bullet rot %s"),*Rot.ToString());
 		TObjectPtr<ARifleProjectile> BulletSpawned = GetWorld()->SpawnActor<ARifleProjectile>(mRifleProjectileClass,Trans,Params);
 		
 	}

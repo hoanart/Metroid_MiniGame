@@ -56,10 +56,20 @@ bool AMetroPlayerController::GetAimLoc(const AMetroCharacter* MPlayer, const UCa
 	AimLoc.Y =YLock;
 	
 	UE_LOG(LogTemp,Display,TEXT("%s"),*AimLoc.ToString());
-	GEngine->AddOnScreenDebugMessage(-1,0.1f,FColor::Yellow,FString::Printf(TEXT("Aim : %s"),*AimLoc.ToString()));
+	//GEngine->AddOnScreenDebugMessage(-1,0.1f,FColor::Yellow,FString::Printf(TEXT("Aim : %s"),*AimLoc.ToString()));
 	
-	DrawDebugSphere(GetWorld(),AimLoc,50.0f,12.0f,FColor::Green,false,5.0f);
+	//DrawDebugSphere(GetWorld(),AimLoc,50.0f,12.0f,FColor::Green,false,5.0f);
 	return true;
+}
+
+const float AMetroPlayerController::GetAimPitch() 
+{
+	FVector Dir = (mAimLoc-MetroPlayer->GetActorLocation()).GetSafeNormal();
+	FRotator Rot = Dir.Rotation();
+	FRotator PlayerRotation = MetroPlayer->GetActorRotation();
+	float Angle = FRotator::NormalizeAxis((Rot-PlayerRotation).Pitch);
+	UE_LOG(LogTemp,Display,TEXT("%f"),Angle);
+	return Angle;
 }
 
 
