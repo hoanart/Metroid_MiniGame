@@ -20,7 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-
+	
+	
 private:
 	UFUNCTION()
 	void OnHit(class UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -28,6 +29,8 @@ private:
 	
 private:
 	FTimerHandle delayTimer;
+	UPROPERTY()
+	bool mbHit;
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category= "Bullet",meta = (AllowPrivateAccess = true))
 	TObjectPtr<class UProjectileMovementComponent> mProjectileComp;

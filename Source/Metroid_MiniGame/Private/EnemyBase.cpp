@@ -3,17 +3,14 @@
 
 #include "EnemyBase.h"
 
+#include "Components/BoxComponent.h"
+
 // Sets default values
 AEnemyBase::AEnemyBase()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	Root = CreateDefaultSubobject<USceneComponent>("RootComponent");
-	RootComponent= Root;
-
-	EnemyStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Enemy");
-	EnemyStaticMeshComponent->SetupAttachment(RootComponent);
+	
 	
 }
 

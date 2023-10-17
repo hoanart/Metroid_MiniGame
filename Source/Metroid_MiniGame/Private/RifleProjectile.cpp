@@ -33,18 +33,21 @@ void ARifleProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	mSphereComp->OnComponentHit.AddDynamic(this,&ARifleProjectile::OnHit);
-	
+	SetActorLocation(FVector(GetActorLocation().X,500.0f,GetActorLocation().Z));
 }
 
 void ARifleProjectile::OnHit(UPrimitiveComponent* HitComponent,
                              AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if(OtherActor!= this)
+	if(OtherActor!= this&&!mbHit)
 	{
-		
+		mbHit = true;
 		mExplosionParticle->Activate(true);
 		mExplosionCue->Activate(true);
+		
 		SetLifeSpan(0.06f);
+		UE_LOG(LogTemp,Warning,TEXT("OHTER ACTOR: %f"),GetLifeSpan());
+		//Destroy();
 	}
 
 }

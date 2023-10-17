@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/Character.h"
 #include "GameFramework/Pawn.h"
 #include "EnemyBase.generated.h"
 
 UCLASS()
-class METROID_MINIGAME_API AEnemyBase : public APawn
+class METROID_MINIGAME_API AEnemyBase : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -24,9 +25,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
-	TObjectPtr<USceneComponent> Root;
-	
+	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
+	//TObjectPtr<USceneComponent> Root;
+	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
+	//TObjectPtr<class UBoxComponent> BoxComp;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
 	TObjectPtr<UStaticMeshComponent> EnemyStaticMeshComponent;
 

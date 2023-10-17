@@ -31,6 +31,7 @@ AMetroCharacter::AMetroCharacter()
 void AMetroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
