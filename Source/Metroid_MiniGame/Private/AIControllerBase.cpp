@@ -31,27 +31,16 @@ AAIControllerBase::AAIControllerBase()
 void AAIControllerBase::BeginPlay()
 {
 	Super::BeginPlay();
-	check(IsValid(AIBehavior));
-	RunBehaviorTree(AIBehavior);
-	PossessedPawn = GetPawn();
-	if(IsValid(PossessedPawn))
-	{
-		UE_LOG(LogTemp,Warning,TEXT("%s "),*PossessedPawn->GetActorLocation().ToString());
-		GetBlackboardComponent()->SetValueAsVector("InitLoc",PossessedPawn->GetActorLocation());
-		//GetBlackboardComponent()->SetValueAsVector("MoveLoc",PossessedPawn->GetActorLocation()+FVector(1000.0f,0.0f,0.0f));
-	}
-	else
-	{
-		UE_LOG(LogTemp,Warning,TEXT("NOT HERE "));
-	}
+	check(IsValid(AIBehaviorTree));
+	RunBehaviorTree(AIBehaviorTree);
 	
 }
 
 void AAIControllerBase::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus AIStimulus)
 {
-	auto GetSense = UAIPerceptionSystem::GetSenseClassForStimulus(this,AIStimulus);
-	if(const TObjectPtr<ACharacter> Player =Cast<ACharacter>(Actor))
-	{
-		UE_LOG(LogTemp,Warning,TEXT("PLAYER DETECTED : %s"),*Player.GetName());
-	}
+	
+	// if(const TObjectPtr<ACharacter> Player =Cast<ACharacter>(Actor))
+	// {
+	// 	UE_LOG(LogTemp,Warning,TEXT("PLAYER DETECTED : %s"),*Player.GetName());
+	// }
 }

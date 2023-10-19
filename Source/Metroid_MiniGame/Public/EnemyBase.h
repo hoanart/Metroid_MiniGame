@@ -24,12 +24,18 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintSetter)
+	void SetAttack(const bool& bAttack);
+	UFUNCTION(BlueprintGetter)
+	const bool& IsAttack() const;
+public:
+	const TMap<TObjectPtr<class AAIPatrolPathPoint>, float>& GetPatrolPath() const;
 protected:
-	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
-	//TObjectPtr<USceneComponent> Root;
-	//UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
-	//TObjectPtr<class UBoxComponent> BoxComp;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
 	TObjectPtr<UStaticMeshComponent> EnemyStaticMeshComponent;
-
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta=(AllowPrivateAccess=true))
+	TObjectPtr<class UAIBehavior> AIBehavior;
+private:
+	UPROPERTY(VisibleAnywhere,BlueprintGetter=IsAttack,BlueprintSetter=SetAttack)
+	bool mbAttack; 
 };

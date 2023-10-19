@@ -21,17 +21,14 @@ protected:
 
 protected:
 	UFUNCTION()
-	void OnTargetPerceptionUpdated(AActor* Actor,FAIStimulus AIStimulus);
+	virtual void OnTargetPerceptionUpdated(AActor* Actor,FAIStimulus AIStimulus);
 	
 protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="AI", meta = (AllowPrivateAccess = true))
-	TObjectPtr<class UBehaviorTree> AIBehavior;
+	TObjectPtr<class UBehaviorTree> AIBehaviorTree;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI",meta = (AllowPrivateAccess = true))
 	TObjectPtr<class UAIPerceptionComponent> AIPerception;
-
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category = "Player",meta=(AllowPrivateAccess=true))
-	TObjectPtr<APawn> PossessedPawn;
 	
 	UPROPERTY()
 	TObjectPtr<class UAISenseConfig_Sight> AISightConfig;

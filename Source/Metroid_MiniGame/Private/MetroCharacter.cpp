@@ -33,7 +33,16 @@ void AMetroCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
+void AMetroCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	CheckJump();
+	if(GetActorLocation().Y!=500.0f)
+	{
+		SetActorLocation(FVector( GetActorLocation().X,500.0f,GetActorLocation().Z) );
+		//SetActorLocation(FMath::VInterpTo(GetActorLocation(),FVector( GetActorLocation().X,500.0f,GetActorLocation().Z),GetWorld()->DeltaTimeSeconds,1.0f) );
+	}
+}
 void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -83,6 +92,13 @@ const FVector& AMetroCharacter::GetGunOffset() const
 const TObjectPtr<UStaticMeshComponent>& AMetroCharacter::GetRifleGuns() const
 {
 	return mRifleGunHold;
+}
+
+void AMetroCharacter::NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp,
+	bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit)
+{
+	Super::NotifyHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
+	SetActorLocation(FMath::VInterpTo(GetActorLocation(),FVector( GetActorLocation().X,500.0f,GetActorLocation().Z),GetWorld()->DeltaTimeSeconds,1.0f) );
 }
 
 

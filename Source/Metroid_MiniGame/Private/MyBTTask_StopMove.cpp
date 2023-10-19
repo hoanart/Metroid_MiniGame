@@ -9,6 +9,7 @@
 
 UMyBTTask_StopMove::UMyBTTask_StopMove()
 {
+	NodeName = "StopMovement";
 }
 
 EBTNodeResult::Type UMyBTTask_StopMove::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -17,9 +18,12 @@ EBTNodeResult::Type UMyBTTask_StopMove::ExecuteTask(UBehaviorTreeComponent& Owne
 	AAIController* Controller = Cast<AAIController>( OwnerComp.GetAIOwner()->GetCharacter()->Controller);
 	if(IsValid(Controller))
 	{
-		OwnerComp.GetBlackboardComponent()->ClearValue("MoveLoc");
-		
-		
+		UE_LOG(LogTemp,Warning,TEXT("Controller is here "));
+	}
+	else
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Controller is NOt here "));
+		return EBTNodeResult::Failed;
 	}
 	return EBTNodeResult::Succeeded;
 }

@@ -43,6 +43,7 @@ public:
 	const TObjectPtr<UStaticMeshComponent>& GetRifleGuns() const;
 	
 private:
+	virtual void NotifyHit(UPrimitiveComponent* MyComp, AActor* Other, UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
 	UFUNCTION()
 	void Equip();
 	UFUNCTION()
@@ -86,8 +87,3 @@ private:
 
 };
 
-inline void AMetroCharacter::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-	CheckJump();
-}
