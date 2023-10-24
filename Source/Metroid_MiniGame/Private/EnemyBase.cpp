@@ -22,6 +22,17 @@ void AEnemyBase::BeginPlay()
 	
 }
 
+void AEnemyBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+}
+
+void AEnemyBase::Attack()
+{
+	PlayAnimMontage(AttackMontage,1,NAME_None);
+	UE_LOG(LogTemp,Warning,TEXT("ATTACK"));
+}
+
 // Called every frame
 void AEnemyBase::Tick(float DeltaTime)
 {

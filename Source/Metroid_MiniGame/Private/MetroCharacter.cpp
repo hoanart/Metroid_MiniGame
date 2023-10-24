@@ -4,6 +4,7 @@
 #include "MetroCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "HealthComponent.h"
 #include "MetroPlayerController.h"
 #include "RifleProjectile.h"
 #include "Components/SphereComponent.h"
@@ -25,13 +26,14 @@ AMetroCharacter::AMetroCharacter()
 	
 	mRifleGunStore= CreateDefaultSubobject<UStaticMeshComponent>(*FString::Printf(TEXT("RiffleGun2")) );
 	mRifleGunStore->SetupAttachment(GetMesh(),FName("GunStore"));
+
+	HealthComponent =CreateDefaultSubobject<UHealthComponent>("HealthComp");
 	
 }
 
 void AMetroCharacter::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();	
 }
 void AMetroCharacter::Tick(float DeltaSeconds)
 {
@@ -52,6 +54,7 @@ void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		EnhancedInputComponent->BindAction(FireAction,ETriggerEvent::Triggered,this,&AMetroCharacter::Fire);
 	}
 }
+
 
 const bool& AMetroCharacter::IsRiffle() const
 {

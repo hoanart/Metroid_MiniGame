@@ -18,6 +18,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	// virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	
 private:
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -84,6 +86,7 @@ private:
 	TObjectPtr<UStaticMeshComponent> mRifleGunHold;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
 	TObjectPtr<UStaticMeshComponent> mRifleGunStore;
-
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
+	TObjectPtr<class UHealthComponent> HealthComponent;
 };
 

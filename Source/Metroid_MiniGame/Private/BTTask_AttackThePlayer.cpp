@@ -5,6 +5,7 @@
 
 #include "AIController.h"
 #include "EnemyBase.h"
+#include "Rat.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -17,18 +18,25 @@ UBTTask_AttackThePlayer::UBTTask_AttackThePlayer()
 EBTNodeResult::Type UBTTask_AttackThePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	 Super::ExecuteTask(OwnerComp, NodeMemory);
-	bool isInRange = OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsInRange");
-	TObjectPtr<AEnemyBase> Enemy = Cast<AEnemyBase>(OwnerComp.GetAIOwner()->GetCharacter());
-	if(isInRange)
-	{
-		Enemy->SetAttack(isInRange);
-	}
-	else
-	{
-		Enemy->SetAttack(false);
-		
-	}
 
+	FTimerHandle TimerHandle;
 	
-	return EBTNodeResult::Succeeded;
+	bool isInRange = OwnerComp.GetBlackboardComponent()->GetValueAsBool("IsInRange");
+	//TObjectPtr<AEnemyBase> Enemy = Cast<AEnemyBase>(OwnerComp.GetAIOwner()->GetCharacter());
+	TObjectPtr<ARat> Enemy = Cast<ARat>(OwnerComp.GetAIOwner()->GetCharacter());
+
+	if(!isInRange)
+	{
+		return EBTNodeResult::Failed;
+	}
+	
+	Enemy->Attack();
+
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle,[this,&TimerHandle,&OwnerComp]()
+	{
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		FinishLatentTask(OwnerComp,EBTNodeResult::Succeeded);
+		//UE_LOG(LogTemp,Warning,TEXT("TIMER "));
+	}, 1.5f,false);
+	return EBTNodeResult::InProgress;
 }

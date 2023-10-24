@@ -20,6 +20,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	virtual void OnHit(UPrimitiveComponent* HitComponent,AActor* OtherActor,UPrimitiveComponent* OtherComp,FVector NormalImpulse,const FHitResult& Hit );
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -28,6 +31,9 @@ public:
 	void SetAttack(const bool& bAttack);
 	UFUNCTION(BlueprintGetter)
 	const bool& IsAttack() const;
+
+	UFUNCTION()
+	virtual void Attack();
 public:
 	const TMap<TObjectPtr<class AAIPatrolPathPoint>, float>& GetPatrolPath() const;
 protected:
@@ -37,5 +43,7 @@ protected:
 	TObjectPtr<class UAIBehavior> AIBehavior;
 private:
 	UPROPERTY(VisibleAnywhere,BlueprintGetter=IsAttack,BlueprintSetter=SetAttack)
-	bool mbAttack; 
+	bool mbAttack;
+	UPROPERTY(EditAnywhere,Category= "Animation")
+	TObjectPtr<UAnimMontage> AttackMontage;
 };

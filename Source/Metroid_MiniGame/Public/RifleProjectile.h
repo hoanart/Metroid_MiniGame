@@ -20,7 +20,8 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSpawnFSMasterField(const FHitResult& Hit);
 	
 private:
 	UFUNCTION()
@@ -49,4 +50,5 @@ private:
 	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category= "Components",meta = (AllowPrivateAccess = true))
 	TObjectPtr<class UAudioComponent> mExplosionCue;
+	
 };
