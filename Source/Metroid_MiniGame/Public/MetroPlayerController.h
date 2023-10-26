@@ -26,7 +26,9 @@ public:
 
 public:
 	UFUNCTION(BlueprintPure)
-	const float GetAimPitch() ; 
+	const float GetAimPitch() ;
+	UFUNCTION(BlueprintPure)
+	const FVector& GetAimLoc() const; 
 private:
 	UPROPERTY(VisibleAnywhere,Category="Mouse")
 	float mMouseX;

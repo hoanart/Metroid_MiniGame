@@ -50,6 +50,8 @@ private:
 	void Equip();
 	UFUNCTION()
 	void Fire();
+	UFUNCTION()
+	void Grapple();
 	//PROPERTY
 public:
 	UFUNCTION(BlueprintImplementableEvent)
@@ -75,7 +77,9 @@ private:
 	TObjectPtr<UInputAction> EquipAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> FireAction;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> GrappleAction;
+	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
 	TObjectPtr<class USphereComponent> mSphereComp;
 	
@@ -88,5 +92,7 @@ private:
 	TObjectPtr<UStaticMeshComponent> mRifleGunStore;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
 	TObjectPtr<class UHealthComponent> HealthComponent;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components",meta = (AllowPrivateAccess = true))
+	TObjectPtr<class UGrappleComponent> GrappleComponent;
 };
 

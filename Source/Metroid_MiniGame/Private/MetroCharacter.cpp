@@ -4,6 +4,7 @@
 #include "MetroCharacter.h"
 
 #include "EnhancedInputComponent.h"
+#include "GrappleComponent.h"
 #include "HealthComponent.h"
 #include "MetroPlayerController.h"
 #include "RifleProjectile.h"
@@ -28,7 +29,7 @@ AMetroCharacter::AMetroCharacter()
 	mRifleGunStore->SetupAttachment(GetMesh(),FName("GunStore"));
 
 	HealthComponent =CreateDefaultSubobject<UHealthComponent>("HealthComp");
-	
+	GrappleComponent = CreateDefaultSubobject<UGrappleComponent>("GrappleComp");
 }
 
 void AMetroCharacter::BeginPlay()
@@ -52,6 +53,7 @@ void AMetroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	{
 		EnhancedInputComponent->BindAction(EquipAction,ETriggerEvent::Triggered ,this,&AMetroCharacter::Equip);
 		EnhancedInputComponent->BindAction(FireAction,ETriggerEvent::Triggered,this,&AMetroCharacter::Fire);
+		EnhancedInputComponent->BindAction(GrappleAction,ETriggerEvent::Triggered,this,&AMetroCharacter::Grapple);
 	}
 }
 
@@ -147,6 +149,12 @@ void AMetroCharacter::Fire()
 		TObjectPtr<ARifleProjectile> BulletSpawned = GetWorld()->SpawnActor<ARifleProjectile>(mRifleProjectileClass,Trans,Params);
 		
 	}
+}
+
+void AMetroCharacter::Grapple()
+{
+	UE_LOG(LogTemp,Warning,TEXT("grapple"));
+	GrappleComponent->TracePoint();
 }
 
 

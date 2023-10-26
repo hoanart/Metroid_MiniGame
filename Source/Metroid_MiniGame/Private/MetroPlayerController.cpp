@@ -25,7 +25,6 @@ void AMetroPlayerController::PlayerTick(float DeltaTime)
 	DeprojectMousePositionToWorld(mWorldLocation,mWorldDirection);
 	
 	GetAimLoc(MetroPlayer,MetroPlayer->GetFollowCamera(),mWorldDirection,mYLock,mAimLoc);
-	
 }
 
 bool AMetroPlayerController::GetAimLoc(const AMetroCharacter* MPlayer, const UCameraComponent* Cam,
@@ -72,6 +71,11 @@ const float AMetroPlayerController::GetAimPitch()
 	//UE_LOG(LogTemp,Display,TEXT("%f"),Angle);
 
 	return Angle;
+}
+
+const FVector& AMetroPlayerController::GetAimLoc() const
+{
+	return mAimLoc;
 }
 
 
